@@ -66,6 +66,9 @@ namespace GameLauncher
         private bool meetingid_invalid;
         private string gameEmail;
         private string gamePassword;
+        private string gameVersionPath = "https://pdate.ceremeet.com/bursa/Version.txt";
+        private string gameZipPath = "https://pdate.ceremeet.com/bursa/Ceremeet.zip";
+
 
 
 
@@ -227,7 +230,7 @@ namespace GameLauncher
                 try
                 {
                     WebClient webClient = new WebClient();
-                    Version onlineVersion = new Version(webClient.DownloadString("https://pdate.ceremeet.com/Version.txt"));
+                    Version onlineVersion = new Version(webClient.DownloadString(gameVersionPath));
 
                     if (onlineVersion.IsDifferentThan(localVersion))
                     {
@@ -272,7 +275,7 @@ namespace GameLauncher
                 else
                 {
                     Status = LauncherStatus.downloadingGame;
-                    _onlineVersion = new Version(webClient.DownloadString("https://pdate.ceremeet.com/Version.txt"));
+                    _onlineVersion = new Version(webClient.DownloadString(gameVersionPath));
                 }
                 webClient.DownloadProgressChanged += (s, e) =>
                 {
@@ -280,7 +283,7 @@ namespace GameLauncher
                     DownloadProgress.Value = e.ProgressPercentage;
                 };
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadGameCompletedCallback);
-                webClient.DownloadFileAsync(new Uri("https://pdate.ceremeet.com/Ceremeet.zip"), gameZip, _onlineVersion);
+                webClient.DownloadFileAsync(new Uri(gameZipPath), gameZip, _onlineVersion);
             }
             catch (Exception ex)
             {
@@ -550,7 +553,8 @@ namespace GameLauncher
                 {
                     UserInfo.Text = (string)Application.Current.FindResource("Greeting") + " " + UserName + ", \n" +
                     (string)Application.Current.FindResource("GreetingMembership") + " " + UserMembership + " " + (string)Application.Current.FindResource("GreetingMembership2") + "\n" +
-                    (string)Application.Current.FindResource("GreetingMembershipFree") + " " + (string)Application.Current.FindResource("GreetingInstructions");
+                    (string)Application.Current.FindResource("GreetingInstructions");
+                    NewMeetingGroup.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
@@ -602,6 +606,7 @@ namespace GameLauncher
                         UserInfo.Text = (string)Application.Current.FindResource("Greeting") + " " + UserName + ", \n" +
     (string)Application.Current.FindResource("GreetingMembership") + " " + UserCompanyMembership + " " + (string)Application.Current.FindResource("GreetingMembershipEnterprise") + " " + (string)Application.Current.FindResource("GreetingMembership2") + " " +
     (string)Application.Current.FindResource("GreetingMembershipPremium") + " \n \n" + (string)Application.Current.FindResource("GreetingInstructions");
+                        NewMeetingGroup.Visibility = Visibility.Visible;
                     }
 
                 }
