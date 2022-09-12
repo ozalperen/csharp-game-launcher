@@ -80,8 +80,9 @@ namespace GameLauncher
         private string RegisterRootad = "/api/auth/register";
         private string CompanyRoot = "/api/companies/membership/";
         private string MeRoot = "/api/users/me";
-        private string MeetingRoot = "/api/meetings";
-        private string MeetingLinkPreferals = "ceremeet://ceremeet:com";
+        private string MeetingRoot = "/api/meetings/";
+        private string MeetingLinkPreferals = "ceremeet://bursa.ceremeet:com/";
+        private string GameLinkPreferals = "ceremeet://ceremeet:com/";
         private string OutlookLinkPreferals = "https://files.ceremeet.com/";
         private string linkchecker;
 
@@ -133,14 +134,14 @@ namespace GameLauncher
                         }
                         if (meetinglink.Length >= 60)
                         {
-                            linkchecker = meetinglink.Substring(0, 23);
+                            linkchecker = meetinglink.Substring(0, MeetingLinkPreferals.Length );
 
                             if (linkchecker == MeetingLinkPreferals)
                             {
                                 if (meetinglink.Length >= 60)
                                 {
-                                    var meetingids = meetinglink.Remove(0, 23);
-                                    meetingid = meetingids.Substring(0, 37);
+                                    var meetingids = meetinglink.Remove(0, MeetingLinkPreferals.Length );
+                                    meetingid = meetingids.Substring(0, 36);
                                     launchParameter = meetinglink;
                                     MeetingRequest(meetingid);
                                     Status = LauncherStatus.ready;
@@ -294,7 +295,7 @@ namespace GameLauncher
         private void RegisterUriScheme()
         {
             rootPath = Directory.GetCurrentDirectory();
-            launcherExe = Path.Combine(rootPath, "CeremeetLauncher.exe");
+            launcherExe = Path.Combine(rootPath, "Bursa Ceremeet Launcher.exe");
 
             using (var key = Registry.CurrentUser.CreateSubKey("SOFTWARE\\Classes\\" + UriScheme))
             {
@@ -363,6 +364,9 @@ namespace GameLauncher
             if (File.Exists(gameExe) && Status == LauncherStatus.ready)
             {
                 ProcessStartInfo startInfo = new ProcessStartInfo(gameExe);
+                launchParameter = launchParameter.Remove(0, MeetingLinkPreferals.Length);
+                launchParameter = GameLinkPreferals + launchParameter;
+                MessageBox.Show(launchParameter);
                 startInfo.Arguments = launchParameter + " " + LocalizationInfo + " " + gameEmail + " " + gamePassword;
                 startInfo.WorkingDirectory = Path.Combine(gamePath, "Ceremeet");
                 if (meetingid_invalid == false)
@@ -384,7 +388,7 @@ namespace GameLauncher
         {
             if (MeetingLink.Text.Length >= 60)
             {
-                linkchecker = MeetingLink.Text.Substring(0, 23);
+                linkchecker = MeetingLink.Text.Substring(0, MeetingLinkPreferals.Length );
                 var linkcheckerfile = MeetingLink.Text.Substring(0, OutlookLinkPreferals.Length);
 
                 if (linkcheckerfile == OutlookLinkPreferals)
@@ -397,10 +401,11 @@ namespace GameLauncher
                 {
                     if (MeetingLink.Text.Length >= 60)
                     {
-                        var meetingids = MeetingLink.Text.Remove(0, 23);
-                        meetingid = meetingids.Substring(0, 37);
+                        var meetingids = MeetingLink.Text.Remove(0, MeetingLinkPreferals.Length );
+                        meetingid = meetingids.Substring(0, 36);
+                        MessageBox.Show(meetingid);
                         MeetingRequest(meetingid);
-                        ShareButton.Visibility = Visibility.Visible;
+                        //ShareButton.Visibility = Visibility.Visible;
 
                         launchParameter = MeetingLink.Text;
                         Status = LauncherStatus.ready;
@@ -679,8 +684,9 @@ namespace GameLauncher
 
                     if (newmobject.status == "success")
                     {
-                        MeetingLink.Text = "ceremeet://ceremeet:com/" + newmobject.data.meeting.id + "?pwd=" + newmobject.data.meeting.password;
+                        MeetingLink.Text = MeetingLinkPreferals  + newmobject.data.meeting.id + "?pwd=" + newmobject.data.meeting.password;
                     meetingid = newmobject.data.meeting.id;
+                        meetingid_invalid = false;
                     }
 
 
@@ -870,10 +876,10 @@ namespace GameLauncher
         private void GetMeetingButton_Click(object sender, RoutedEventArgs e)
         {
             var meetingids = MeetingLink.Text.Remove(0, 23);
-            meetingid = meetingids.Substring(0, 37);
+            meetingid = meetingids.Substring(0, 36);
             launchParameter = MeetingLink.Text;
             MeetingRequest(meetingid);
-            ShareButton.Visibility = Visibility.Visible;
+            //ShareButton.Visibility = Visibility.Visible;
         }
 
 
