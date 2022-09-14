@@ -180,7 +180,7 @@ namespace GameLauncher
             args = Environment.GetCommandLineArgs();
             InitializeComponent();
             appdataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            gamePath = Path.Combine(appdataPath, "ceremeet");
+            gamePath = Path.Combine(appdataPath, "ceremeet bursa");
             versionFile = Path.Combine(gamePath, "Version.txt");
             gameZip = Path.Combine(gamePath, "Ceremeet.zip");
             gameExe = Path.Combine(gamePath, "Ceremeet", "ceremeet.exe");
@@ -366,7 +366,6 @@ namespace GameLauncher
                 ProcessStartInfo startInfo = new ProcessStartInfo(gameExe);
                 launchParameter = launchParameter.Remove(0, MeetingLinkPreferals.Length);
                 launchParameter = GameLinkPreferals + launchParameter;
-                MessageBox.Show(launchParameter);
                 startInfo.Arguments = launchParameter + " " + LocalizationInfo + " " + gameEmail + " " + gamePassword;
                 startInfo.WorkingDirectory = Path.Combine(gamePath, "Ceremeet");
                 if (meetingid_invalid == false)
@@ -403,7 +402,6 @@ namespace GameLauncher
                     {
                         var meetingids = MeetingLink.Text.Remove(0, MeetingLinkPreferals.Length );
                         meetingid = meetingids.Substring(0, 36);
-                        MessageBox.Show(meetingid);
                         MeetingRequest(meetingid);
                         //ShareButton.Visibility = Visibility.Visible;
 
@@ -667,7 +665,7 @@ namespace GameLauncher
             httpRequest.Method = "POST";
             var BearerToken = "Bearer " + access_token;
             httpRequest.Headers["Authorization"] = BearerToken;
-            var json = "{\"title\":\"" + title + "\", \"password\":\"" + "password" +  "\", \"presentation\":\"" + "pdf.pdf" + "\"}";
+            var json = "{\"title\":\"" + title + "\", \"password\":\"" + "password" +  "\", \"presentation\":\"" + "bursalogo.pdf" + "\"}";
             using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
             {
 
