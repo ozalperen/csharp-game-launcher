@@ -63,7 +63,7 @@
                          Foreground="#161376" BorderThickness="0"   Content="ENG" HorizontalAlignment="Center" Visibility="Hidden" Margin="1006,30,0,0" VerticalAlignment="Top" Click="eng_Click"/>
         <Button x:Name="TrButton" IsEnabled="True" Background="#01d5bc"
                          Foreground="#161376" BorderThickness="0"   Content="TR" HorizontalAlignment="Center" Visibility="Hidden" Margin="1006,30,0,0" VerticalAlignment="Top" Click="tr_Click"/>
-        <Image HorizontalAlignment="Left" Height="100" Source="images/Bursa_Büyükşehir_Belediyesi_Logosu.png" Margin="870,0,0,0" VerticalAlignment="Top" Width="100"/>
+        <Image HorizontalAlignment="Left" Height="100" Visibility="Collapsed" Source="images/Bursa_Büyükşehir_Belediyesi_Logosu.png" Margin="870,0,0,0" VerticalAlignment="Top" Width="100"/>
         <GroupBox x:Name="LoginGroup" Width="300" Height="249" VerticalAlignment="Center" Background="#D6ECFF" BorderThickness="0"  HorizontalAlignment="Left" Margin="385,0,0,0" Foreground="#1B3B56" d:IsHidden="True" >
             <Grid Height="207">
                 <TextBox x:Name="email"

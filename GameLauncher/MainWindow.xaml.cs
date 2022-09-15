@@ -66,8 +66,8 @@ namespace GameLauncher
         private bool meetingid_invalid;
         private string gameEmail;
         private string gamePassword;
-        private string gameVersionPath = "https://pdate.ceremeet.com/bursa/Version.txt";
-        private string gameZipPath = "https://pdate.ceremeet.com/bursa/Ceremeet.zip";
+        private string gameVersionPath = "https://pdate.ceremeet.com/showcase/Version.txt";
+        private string gameZipPath = "https://pdate.ceremeet.com/showcase/Ceremeet.zip";
 
 
 
@@ -81,7 +81,7 @@ namespace GameLauncher
         private string CompanyRoot = "/api/companies/membership/";
         private string MeRoot = "/api/users/me";
         private string MeetingRoot = "/api/meetings/";
-        private string MeetingLinkPreferals = "ceremeet://bursa.ceremeet:com/";
+        private string MeetingLinkPreferals = "ceremeet://showcase.ceremeet:com/";
         private string GameLinkPreferals = "ceremeet://ceremeet:com/";
         private string OutlookLinkPreferals = "https://files.ceremeet.com/";
         private string linkchecker;
@@ -180,7 +180,7 @@ namespace GameLauncher
             args = Environment.GetCommandLineArgs();
             InitializeComponent();
             appdataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            gamePath = Path.Combine(appdataPath, "ceremeet bursa");
+            gamePath = Path.Combine(appdataPath, "ceremeet showcase");
             versionFile = Path.Combine(gamePath, "Version.txt");
             gameZip = Path.Combine(gamePath, "Ceremeet.zip");
             gameExe = Path.Combine(gamePath, "Ceremeet", "ceremeet.exe");
@@ -295,7 +295,7 @@ namespace GameLauncher
         private void RegisterUriScheme()
         {
             rootPath = Directory.GetCurrentDirectory();
-            launcherExe = Path.Combine(rootPath, "Bursa Ceremeet Launcher.exe");
+            launcherExe = Path.Combine(rootPath, "Showcase Ceremeet Launcher.exe");
 
             using (var key = Registry.CurrentUser.CreateSubKey("SOFTWARE\\Classes\\" + UriScheme))
             {
@@ -665,7 +665,7 @@ namespace GameLauncher
             httpRequest.Method = "POST";
             var BearerToken = "Bearer " + access_token;
             httpRequest.Headers["Authorization"] = BearerToken;
-            var json = "{\"title\":\"" + title + "\", \"password\":\"" + "password" +  "\", \"presentation\":\"" + "bursalogo.pdf" + "\"}";
+            var json = "{\"title\":\"" + title + "\", \"password\":\"" + "password" +  "\", \"presentation\":\"" + "CerebrumTech_CereMeet_Deck.pdf" + "\"}";
             using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
             {
 
