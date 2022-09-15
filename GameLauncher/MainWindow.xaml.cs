@@ -364,8 +364,6 @@ namespace GameLauncher
             if (File.Exists(gameExe) && Status == LauncherStatus.ready)
             {
                 ProcessStartInfo startInfo = new ProcessStartInfo(gameExe);
-                launchParameter = launchParameter.Remove(0, MeetingLinkPreferals.Length);
-                launchParameter = GameLinkPreferals + launchParameter;
                 startInfo.Arguments = launchParameter + " " + LocalizationInfo + " " + gameEmail + " " + gamePassword;
                 startInfo.WorkingDirectory = Path.Combine(gamePath, "Ceremeet");
                 if (meetingid_invalid == false)
@@ -406,6 +404,8 @@ namespace GameLauncher
                         //ShareButton.Visibility = Visibility.Visible;
 
                         launchParameter = MeetingLink.Text;
+                        launchParameter = launchParameter.Remove(0, MeetingLinkPreferals.Length);
+                        launchParameter = GameLinkPreferals + launchParameter;
                         Status = LauncherStatus.ready;
                     }
                     }
