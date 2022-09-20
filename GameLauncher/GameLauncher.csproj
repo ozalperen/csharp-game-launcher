@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>images\Icon.ico</ApplicationIcon>
-    <AssemblyName>CeremeetLauncher</AssemblyName>
+    <AssemblyName>Ceremeet Launcher Light</AssemblyName>
     <RootNamespace>CeremeetGameLauncher</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>

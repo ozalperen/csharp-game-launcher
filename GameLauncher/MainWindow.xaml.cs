@@ -196,7 +196,7 @@ namespace GameLauncher
             args = Environment.GetCommandLineArgs();
             InitializeComponent();
             appdataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            gamePath = Path.Combine(appdataPath, "ceremeet");
+            gamePath = Path.Combine(appdataPath, "ceremeet light");
             versionFile = Path.Combine(gamePath, "Version.txt");
             gameZip = Path.Combine(gamePath, "Ceremeet.zip");
             gameExe = Path.Combine(gamePath, "Ceremeet", "ceremeet.exe");
@@ -247,7 +247,7 @@ namespace GameLauncher
                 try
                 {
                     WebClient webClient = new WebClient();
-                    Version onlineVersion = new Version(webClient.DownloadString("https://pdate.ceremeet.com/Version.txt"));
+                    Version onlineVersion = new Version(webClient.DownloadString("https://pdate.ceremeet.com/light/Version.txt"));
 
                     if (onlineVersion.IsDifferentThan(localVersion))
                     {
@@ -292,7 +292,7 @@ namespace GameLauncher
                 else
                 {
                     Status = LauncherStatus.downloadingGame;
-                    _onlineVersion = new Version(webClient.DownloadString("https://pdate.ceremeet.com/Version.txt"));
+                    _onlineVersion = new Version(webClient.DownloadString("https://pdate.ceremeet.com/light/Version.txt"));
                 }
                 webClient.DownloadProgressChanged += (s, e) =>
                 {
@@ -300,7 +300,7 @@ namespace GameLauncher
                     DownloadProgress.Value = e.ProgressPercentage;
                 };
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadGameCompletedCallback);
-                webClient.DownloadFileAsync(new Uri("https://pdate.ceremeet.com/Ceremeet.zip"), gameZip, _onlineVersion);
+                webClient.DownloadFileAsync(new Uri("https://pdate.ceremeet.com/light/Ceremeet.zip"), gameZip, _onlineVersion);
             }
             catch (Exception ex)
             {
