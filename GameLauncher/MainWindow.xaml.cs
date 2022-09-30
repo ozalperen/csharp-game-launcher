@@ -23,8 +23,10 @@ using System.Drawing;
 using System.Windows.Media;
 using System.Security.Policy;
 using CeremeetGameLauncher.Properties;
+using DocumentFormat.OpenXml.CustomProperties;
 
-
+namespace GameLauncher
+{
     enum LauncherStatus
     {
         ready,
@@ -135,7 +137,7 @@ using CeremeetGameLauncher.Properties;
                         }
                         MeetingGroup.Visibility = Visibility.Hidden;
                         NewMeetingGroup.Visibility = Visibility.Hidden;
-                        
+
 
                         break;
                     case LauncherStatus.pendingLink:
@@ -321,9 +323,9 @@ using CeremeetGameLauncher.Properties;
                 // Replace typeof(App) by the class that contains the Main method or any class located in the project that produces the exe.
                 // or replace typeof(App).Assembly.Location by anything that gives the full path to the exe
 
-          
 
-                    key.SetValue("", "URL:" + FriendlyName);
+
+                key.SetValue("", "URL:" + FriendlyName);
                 key.SetValue("URL Protocol", "");
 
                 using (var defaultIcon = key.CreateSubKey("DefaultIcon"))
@@ -426,7 +428,7 @@ using CeremeetGameLauncher.Properties;
                         launchParameter = MeetingLink.Text;
                         Status = LauncherStatus.ready;
                     }
-                    }
+                }
             }
         }
 
@@ -496,7 +498,7 @@ using CeremeetGameLauncher.Properties;
             //var json = "{\"email\":\"alp@cerebrumtechnologies.com\",\"password\":\"password1222\"}";
             using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
             {
-               
+
 
                 streamWriter.Write(json);
             }
@@ -563,13 +565,13 @@ using CeremeetGameLauncher.Properties;
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
                 var result = streamReader.ReadToEnd();
-                
+
                 Root MeObj = JsonSerializer.Deserialize<Root>(result);
                 UserName = MeObj.data.user.name;
                 UserEmail = MeObj.data.user.email;
                 UserMembership = MeObj.data.user.membership;
                 UserDomain = MeObj.data.user.domain;
-                
+
                 if (UserMembership == "free")
                 {
                     UserInfo.Text = (string)Application.Current.FindResource("Greeting") + " " + UserName + ", \n" +
@@ -602,7 +604,7 @@ using CeremeetGameLauncher.Properties;
         }
 
 
-        public void CompanyRequest(string domain )
+        public void CompanyRequest(string domain)
         {
             var httpRequest = (HttpWebRequest)WebRequest.Create(ApiAddress + CompanyRoot + domain);
             httpRequest.Accept = "application/json";
@@ -681,7 +683,7 @@ using CeremeetGameLauncher.Properties;
             httpRequest.Method = "POST";
             var BearerToken = "Bearer " + access_token;
             httpRequest.Headers["Authorization"] = BearerToken;
-            var json = "{\"title\":\"" + title + "\", \"password\":\"" + "password" +  "\", \"presentation\":\"" + "pdf.pdf" + "\"}";
+            var json = "{\"title\":\"" + title + "\", \"password\":\"" + "password" + "\", \"presentation\":\"" + "pdf.pdf" + "\"}";
             using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
             {
 
@@ -699,7 +701,7 @@ using CeremeetGameLauncher.Properties;
                     if (newmobject.status == "success")
                     {
                         MeetingLink.Text = "ceremeet://ceremeet:com/" + newmobject.data.meeting.id + "?pwd=" + newmobject.data.meeting.password;
-                    meetingid = newmobject.data.meeting.id;
+                        meetingid = newmobject.data.meeting.id;
                     }
 
 
@@ -748,11 +750,12 @@ using CeremeetGameLauncher.Properties;
                     var result = streamReader.ReadToEnd();
 
                     mRoot MeetingObj = JsonSerializer.Deserialize<mRoot>(result);
-                    if (MeetingObj.data.meeting.title != null) { 
-                    var MeetingTitle = MeetingObj.data.meeting.title;
-                    MeetingInfo.Visibility = Visibility.Visible;
+                    if (MeetingObj.data.meeting.title != null)
+                    {
+                        var MeetingTitle = MeetingObj.data.meeting.title;
+                        MeetingInfo.Visibility = Visibility.Visible;
 
-                    MeetingInfo.Text = (string)Application.Current.FindResource("meetingInfoJoining") + " \n" + MeetingTitle;
+                        MeetingInfo.Text = (string)Application.Current.FindResource("meetingInfoJoining") + " \n" + MeetingTitle;
                         NewMeetingTitle.Text = MeetingTitle;
                     }
                 }
@@ -875,21 +878,17 @@ using CeremeetGameLauncher.Properties;
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             LoginRequest(email.Text, password.Password);
-            Settings.Default.email = email.Text;
-            Settings.Default.password = password.Password;
-            Settings.Default.Save();
             gamePassword = password.Password;
             gameEmail = email.Text;
             Settings.Default.email = email.Text;
             Settings.Default.password = password.Password;
             Settings.Default.Save();
 
-
-    }
+        }
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
             Status = LauncherStatus.pendingLogin;
             Settings.Default.email = null;
             Settings.Default.password = null;
@@ -918,14 +917,14 @@ using CeremeetGameLauncher.Properties;
             {
                 CreateNewMeetingRequest(NewMeetingTitle.Text);
             }
-         }
+        }
 
         private void NewMeetingTitle_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
-        
-        
+
+
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             var sInfo = new System.Diagnostics.ProcessStartInfo(e.Uri.AbsoluteUri)
@@ -946,13 +945,13 @@ using CeremeetGameLauncher.Properties;
             public string message { get; set; }
         }
 
-        public void RegisterRequest(string email, string password, string passwordconfirm, string name, string LocalizationInfo)
+        public void RegisterRequest(string email, string password, string passwordconfirm, string name)
         {
             var httpRequest = (HttpWebRequest)WebRequest.Create(ApiAddress + RegisterRootad);
             httpRequest.ContentType = "application/json";
             httpRequest.Accept = "application/json";
             httpRequest.Method = "POST";
-            var json = "{\"email\":\"" + email + "\", \"password\":\"" + password + "\"," + "\"name\":\"" + name + "\"," + "\"passwordConfirm\":\"" + passwordconfirm + "\", \"lang\":\"" + LocalizationInfo + "\"}";
+            var json = "{\"email\":\"" + email + "\", \"password\":\"" + password + "\"," + "\"name\":\"" + name + "\"," + "\"passwordConfirm\":\"" + passwordconfirm + "\"}";
             //var json = "{\"email\":\"alp@cerebrumtechnologies.com\",\"password\":\"password1222\"}";
             using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
             {
@@ -990,7 +989,7 @@ using CeremeetGameLauncher.Properties;
         }
         private void SendRegisterButton_Click(object sender, RoutedEventArgs e)
         {
-                        if (Name.Text.Length < 3  | newemail.Text.Length < 3)
+            if (Name.Text.Length < 3 | newemail.Text.Length < 3)
             {
                 MessageBox.Show((string)Application.Current.FindResource("FillAll"));
 
@@ -1011,7 +1010,7 @@ using CeremeetGameLauncher.Properties;
 
             else
             {
-                RegisterRequest(newemail.Text, newpassword.Password, newpasswordconfirm.Password, Name.Text, LocalizationInfo);
+                RegisterRequest(newemail.Text, newpassword.Password, newpasswordconfirm.Password, Name.Text);
             }
         }
 
@@ -1042,7 +1041,7 @@ using CeremeetGameLauncher.Properties;
 
                 Outlook.Application outlookApp = new Outlook.Application();
                 Outlook._AppointmentItem oAppointmentItem = (Outlook.AppointmentItem)outlookApp.CreateItem(Outlook.OlItemType.olAppointmentItem);
-                Outlook.Inspector oInspector =  oAppointmentItem.GetInspector;
+                Outlook.Inspector oInspector = oAppointmentItem.GetInspector;
                 // Thread.Sleep(10000);
 
                 // Recipient
@@ -1076,13 +1075,14 @@ using CeremeetGameLauncher.Properties;
                 {
                     Ping ping = new Ping();
                     PingReply reply = await ping.SendPingAsync(gameserverIp);
-                    
+
                     if (reply != null)
                     {
                         // Display the result.
 
                         pingText.Text = "Ping: " + reply.RoundtripTime.ToString();
-                        if (reply.RoundtripTime == 0) {
+                        if (reply.RoundtripTime == 0)
+                        {
                             pingText.Foreground = new SolidColorBrush(Colors.Red);
                             pingText.Text = (string)Application.Current.FindResource("CannotConnectGameServer");
                             MessageBox.Show((string)Application.Current.FindResource("CannotConnectGameServer"));
@@ -1099,14 +1099,15 @@ using CeremeetGameLauncher.Properties;
                         {
                             pingText.Foreground = new SolidColorBrush(Colors.Red);
                         }
-                            }
+                    }
                     await Task.Delay(1000);
                 }
-                catch {
+                catch
+                {
                     MessageBox.Show((string)Application.Current.FindResource("CannotConnectGameServer"));
                 }
             }
-            }
+        }
 
         public async void CheckGamePoresses()
         {
@@ -1114,7 +1115,7 @@ using CeremeetGameLauncher.Properties;
             {
                 try
                 {
-                    Process[] processes =  Process.GetProcessesByName("Ceremeet");
+                    Process[] processes = Process.GetProcessesByName("Ceremeet");
 
                     if (processes.Length > 0)
 

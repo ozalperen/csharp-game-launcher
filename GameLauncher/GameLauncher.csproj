@@ -1,74 +1,77 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <ApplicationIcon>images\Icon.ico</ApplicationIcon>
-    <AssemblyName>CeremeetLauncher</AssemblyName>
-    <RootNamespace>CeremeetGameLauncher</RootNamespace>
-    <UseWindowsForms>true</UseWindowsForms>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<ApplicationIcon>images\Icon.ico</ApplicationIcon>
+		<AssemblyName>CeremeetLauncher</AssemblyName>
+		<RootNamespace>CeremeetGameLauncher</RootNamespace>
+		<UseWindowsForms>true</UseWindowsForms>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="images\Icon.ico" />
-    <None Remove="images\LauncherBackground.png" />
-    <None Remove="images\LauncherBackground.wmv" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="images\Icon.ico" />
+		<None Remove="images\LauncherBackground.png" />
+		<None Remove="images\LauncherBackground.wmv" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <COMReference Include="Microsoft.Office.Interop.Outlook">
-      <WrapperTool>tlbimp</WrapperTool>
-      <VersionMinor>6</VersionMinor>
-      <VersionMajor>9</VersionMajor>
-      <Guid>00062fff-0000-0000-c000-000000000046</Guid>
-      <Lcid>0</Lcid>
-      <Isolated>false</Isolated>
-      <EmbedInteropTypes>true</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup>
+	<ItemGroup>
+		<COMReference Include="Microsoft.Office.Interop.Outlook">
+			<WrapperTool>tlbimp</WrapperTool>
+			<VersionMinor>6</VersionMinor>
+			<VersionMajor>9</VersionMajor>
+			<Guid>00062fff-0000-0000-c000-000000000046</Guid>
+			<Lcid>0</Lcid>
+			<Isolated>false</Isolated>
+			<EmbedInteropTypes>true</EmbedInteropTypes>
+		</COMReference>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="images\LauncherBackground.wmv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="images\LauncherBackground.wmv">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="DocumentFormat.OpenXml" Version="2.17.1" />
-    <PackageReference Include="WPFLocalizeExtension" Version="3.9.4" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="DocumentFormat.OpenXml" Version="2.17.1" />
+		<PackageReference Include="WPFLocalizeExtension" Version="3.9.4" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="images\LauncherBackground.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="images\LauncherBackground.png" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="images\Icon.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
+	<ItemGroup>
+		<Resource Include="images\Icon.ico">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Resource>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties\Settings.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Settings.settings</DependentUpon>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
+		<None Update="App.config">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</None>
+		<None Update="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
 
-    <None Update="App.config">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-
-
-  <ItemGroup>
-    <Page Update="Resources\Dictionary_tr-TR.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
+	<ItemGroup>
+		<Page Update="Resources\Dictionary_tr-TR.xaml">
+			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+			<SubType>Designer</SubType>
+		</Page>
+	</ItemGroup>
 
 </Project>
