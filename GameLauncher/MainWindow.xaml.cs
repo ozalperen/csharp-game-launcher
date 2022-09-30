@@ -12,18 +12,11 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using System.Text.Json;
 using System.Windows.Navigation;
-using System.Reflection;
 using Outlook = Microsoft.Office.Interop.Outlook;
-using System.Collections.Generic;
-using System.Text;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
-using DocumentFormat.OpenXml.Bibliography;
-using System.Drawing;
 using System.Windows.Media;
-using System.Security.Policy;
 using CeremeetGameLauncher.Properties;
-using DocumentFormat.OpenXml.CustomProperties;
 
 namespace GameLauncher
 {
