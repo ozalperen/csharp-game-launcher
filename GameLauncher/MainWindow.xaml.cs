@@ -22,9 +22,54 @@ using DocumentFormat.OpenXml.Bibliography;
 using System.Drawing;
 using System.Windows.Media;
 using System.Security.Policy;
+using DocumentFormat.OpenXml.CustomProperties;
 
 namespace GameLauncher
 {
+
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
+    {
+
+        private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
+
+        public static Settings Default
+        {
+            get
+            {
+                return defaultInstance;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("asd")]
+        public string email
+        {
+            get
+            {
+                return ((string)(this["email"]));
+            }
+            set
+            {
+                this["email"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("asd")]
+        public string password
+        {
+            get
+            {
+                return ((string)(this["password"]));
+            }
+            set
+            {
+                this["password"] = value;
+            }
+        }
+    }
     enum LauncherStatus
     {
         ready,
@@ -124,6 +169,8 @@ namespace GameLauncher
                         break;
                     case LauncherStatus.pendingLogin:
                         PlayButton.Content = (string)Application.Current.FindResource("pendingLogin");
+                        email.Text = Settings.Default.email;
+                        password.Password = Settings.Default.password;
                         LoginGroup.Visibility = Visibility.Visible;
                         UserGroup.Visibility = Visibility.Collapsed;
                         LoginButton.IsEnabled = true;
@@ -873,8 +920,12 @@ namespace GameLauncher
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             LoginRequest(email.Text, password.Password);
+            Settings.Default.email = email.Text;
+            Settings.Default.password = password.Password;
+            Settings.Default.Save();
             gamePassword = password.Password;
             gameEmail = email.Text;
+
 
     }
 
@@ -932,13 +983,13 @@ namespace GameLauncher
             public string message { get; set; }
         }
 
-        public void RegisterRequest(string email, string password, string passwordconfirm, string name)
+        public void RegisterRequest(string email, string password, string passwordconfirm, string name, string LocalizationInfo)
         {
             var httpRequest = (HttpWebRequest)WebRequest.Create(ApiAddress + RegisterRootad);
             httpRequest.ContentType = "application/json";
             httpRequest.Accept = "application/json";
             httpRequest.Method = "POST";
-            var json = "{\"email\":\"" + email + "\", \"password\":\"" + password + "\"," + "\"name\":\"" + name + "\"," + "\"passwordConfirm\":\"" + passwordconfirm + "\"}";
+            var json = "{\"email\":\"" + email + "\", \"password\":\"" + password + "\"," + "\"name\":\"" + name + "\"," + "\"passwordConfirm\":\"" + passwordconfirm + "\", \"lang\":\"" + LocalizationInfo + "\"}";
             //var json = "{\"email\":\"alp@cerebrumtechnologies.com\",\"password\":\"password1222\"}";
             using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
             {
@@ -997,7 +1048,7 @@ namespace GameLauncher
 
             else
             {
-                RegisterRequest(newemail.Text, newpassword.Password, newpasswordconfirm.Password, Name.Text);
+                RegisterRequest(newemail.Text, newpassword.Password, newpasswordconfirm.Password, Name.Text, LocalizationInfo);
             }
         }
 
