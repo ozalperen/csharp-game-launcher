@@ -23,10 +23,8 @@ using System.Drawing;
 using System.Windows.Media;
 using System.Security.Policy;
 using CeremeetGameLauncher.Properties;
-using DocumentFormat.OpenXml.CustomProperties;
 
-namespace GameLauncher
-{
+
     enum LauncherStatus
     {
         ready,
@@ -877,11 +875,15 @@ namespace GameLauncher
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             LoginRequest(email.Text, password.Password);
+            Settings.Default.email = email.Text;
+            Settings.Default.password = password.Password;
+            Settings.Default.Save();
             gamePassword = password.Password;
             gameEmail = email.Text;
             Settings.Default.email = email.Text;
             Settings.Default.password = password.Password;
             Settings.Default.Save();
+
 
     }
 
@@ -944,13 +946,13 @@ namespace GameLauncher
             public string message { get; set; }
         }
 
-        public void RegisterRequest(string email, string password, string passwordconfirm, string name)
+        public void RegisterRequest(string email, string password, string passwordconfirm, string name, string LocalizationInfo)
         {
             var httpRequest = (HttpWebRequest)WebRequest.Create(ApiAddress + RegisterRootad);
             httpRequest.ContentType = "application/json";
             httpRequest.Accept = "application/json";
             httpRequest.Method = "POST";
-            var json = "{\"email\":\"" + email + "\", \"password\":\"" + password + "\"," + "\"name\":\"" + name + "\"," + "\"passwordConfirm\":\"" + passwordconfirm + "\"}";
+            var json = "{\"email\":\"" + email + "\", \"password\":\"" + password + "\"," + "\"name\":\"" + name + "\"," + "\"passwordConfirm\":\"" + passwordconfirm + "\", \"lang\":\"" + LocalizationInfo + "\"}";
             //var json = "{\"email\":\"alp@cerebrumtechnologies.com\",\"password\":\"password1222\"}";
             using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
             {
@@ -1009,7 +1011,7 @@ namespace GameLauncher
 
             else
             {
-                RegisterRequest(newemail.Text, newpassword.Password, newpasswordconfirm.Password, Name.Text);
+                RegisterRequest(newemail.Text, newpassword.Password, newpasswordconfirm.Password, Name.Text, LocalizationInfo);
             }
         }
 

@@ -25,7 +25,9 @@ namespace CeremeetGameLauncher.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+
         [global::System.Configuration.DefaultSettingValueAttribute("")]
+
         public string email {
             get {
                 return ((string)(this["email"]));
@@ -37,7 +39,9 @@ namespace CeremeetGameLauncher.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+
         [global::System.Configuration.DefaultSettingValueAttribute("")]
+
         public string password {
             get {
                 return ((string)(this["password"]));
