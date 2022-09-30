@@ -22,54 +22,9 @@ using DocumentFormat.OpenXml.Bibliography;
 using System.Drawing;
 using System.Windows.Media;
 using System.Security.Policy;
-using DocumentFormat.OpenXml.CustomProperties;
+using CeremeetGameLauncher.Properties;
 
-namespace GameLauncher
-{
 
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
-        private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
-        public static Settings Default
-        {
-            get
-            {
-                return defaultInstance;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("asd")]
-        public string email
-        {
-            get
-            {
-                return ((string)(this["email"]));
-            }
-            set
-            {
-                this["email"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("asd")]
-        public string password
-        {
-            get
-            {
-                return ((string)(this["password"]));
-            }
-            set
-            {
-                this["password"] = value;
-            }
-        }
-    }
     enum LauncherStatus
     {
         ready,
@@ -925,6 +880,9 @@ namespace GameLauncher
             Settings.Default.Save();
             gamePassword = password.Password;
             gameEmail = email.Text;
+            Settings.Default.email = email.Text;
+            Settings.Default.password = password.Password;
+            Settings.Default.Save();
 
 
     }
@@ -933,6 +891,11 @@ namespace GameLauncher
         {
             
             Status = LauncherStatus.pendingLogin;
+            Settings.Default.email = null;
+            Settings.Default.password = null;
+            Settings.Default.email = email.Text;
+            Settings.Default.password = password.Password;
+            Settings.Default.Save();
         }
 
         private void GetMeetingButton_Click(object sender, RoutedEventArgs e)

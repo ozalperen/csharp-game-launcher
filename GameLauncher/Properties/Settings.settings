@@ -3,10 +3,12 @@
   <Profiles />
   <Settings>
     <Setting Name="email" Type="System.String" Scope="User">
-      <Value Profile="(Default)">asd</Value>
+
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="password" Type="System.String" Scope="User">
-      <Value Profile="(Default)">asd</Value>
+      <Value Profile="(Default)" />
+
     </Setting>
   </Settings>
 </SettingsFile>

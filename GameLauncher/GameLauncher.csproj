@@ -58,11 +58,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+
+    <None Update="App.config">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
+
 
   <ItemGroup>
     <Page Update="Resources\Dictionary_tr-TR.xaml">
