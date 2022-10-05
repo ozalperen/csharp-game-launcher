@@ -17,6 +17,7 @@ using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using CeremeetGameLauncher.Properties;
+using System.Linq;
 
 namespace GameLauncher
 {
@@ -91,6 +92,7 @@ namespace GameLauncher
                         if (DownloadProgress != null)
                         {
                             DownloadProgress.Visibility = Visibility.Collapsed;
+                            DownloadProgressText.Visibility = Visibility.Collapsed;
                         }
                         MeetingGroup.Visibility = Visibility.Visible;
                         LoginButton.IsEnabled = true;
@@ -102,11 +104,13 @@ namespace GameLauncher
                         MeetingLink.IsEnabled = false;
                         CheckGamePoresses();
                         break;
+
                     case LauncherStatus.ready:
                         PlayButton.Content = (string)Application.Current.FindResource("start");
                         if (DownloadProgress != null)
                         {
                             DownloadProgress.Visibility = Visibility.Collapsed;
+                            DownloadProgressText.Visibility = Visibility.Collapsed;
                         }
                         MeetingGroup.Visibility = Visibility.Visible;
                         LoginButton.IsEnabled = true;
@@ -127,6 +131,7 @@ namespace GameLauncher
                         if (DownloadProgress != null)
                         {
                             DownloadProgress.Visibility = Visibility.Collapsed;
+                            DownloadProgressText.Visibility = Visibility.Collapsed;
                         }
                         MeetingGroup.Visibility = Visibility.Hidden;
                         NewMeetingGroup.Visibility = Visibility.Hidden;
@@ -145,6 +150,7 @@ namespace GameLauncher
                         if (DownloadProgress != null)
                         {
                             DownloadProgress.Visibility = Visibility.Collapsed;
+                            DownloadProgressText.Visibility = Visibility.Collapsed;
                         }
                         if (meetinglink.Length >= 60)
                         {
@@ -191,6 +197,7 @@ namespace GameLauncher
             defaultLocalization = CultureInfo.InstalledUICulture.ToString();
             SwitchLanguage(defaultLocalization);
             LocalizationInfo = defaultLocalization;
+            if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1) System.Diagnostics.Process.GetCurrentProcess().Kill();
             args = Environment.GetCommandLineArgs();
             InitializeComponent();
             appdataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -295,6 +302,7 @@ namespace GameLauncher
                 webClient.DownloadProgressChanged += (s, e) =>
                 {
                     DownloadProgress.Visibility = Visibility.Visible;
+                    DownloadProgressText.Visibility = Visibility.Visible;
                     DownloadProgress.Value = e.ProgressPercentage;
                 };
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadGameCompletedCallback);
@@ -885,8 +893,8 @@ namespace GameLauncher
             Status = LauncherStatus.pendingLogin;
             Settings.Default.email = null;
             Settings.Default.password = null;
-            Settings.Default.email = email.Text;
-            Settings.Default.password = password.Password;
+            email.Text = null;
+            password.Password = null;
             Settings.Default.Save();
         }
 
@@ -1131,6 +1139,8 @@ namespace GameLauncher
                 }
             }
         }
+
+        
 
         private void ForgotButton_Click(object sender, RoutedEventArgs e)
         {

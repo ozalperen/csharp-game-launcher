@@ -57,8 +57,13 @@
                 VerticalAlignment="Bottom" HorizontalAlignment="Right" MinWidth="150"
                 Background="#01d5bc"
                          Foreground="#161376" Padding="10,1,10,1"/>
-        <ProgressBar x:Uid="DownloadProgress" Background="Azure" BorderThickness="0"  Foreground="Aqua" x:Name="DownloadProgress" HorizontalAlignment="Center" Height="10" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="1080" ValueChanged="DownloadProgress_ValueChanged"/>
-        <Button x:Name="EngButton" IsEnabled="True" Background="#01d5bc"
+        <Grid>
+        <ProgressBar x:Uid="DownloadProgress" Background="Azure" BorderThickness="0"  Foreground="Aqua" x:Name="DownloadProgress" HorizontalAlignment="Center" Height="15" Margin="0,0,0,0" VerticalAlignment="Bottom" Width="1080" ValueChanged="DownloadProgress_ValueChanged"/>
+            <TextBlock Name="DownloadProgressText" Text="{Binding ElementName=DownloadProgress, Path=Value, StringFormat={}{0:0}%}"  Visibility="Hidden"
+HorizontalAlignment="Center" Height="15" Margin="0,0,0,2" VerticalAlignment="Bottom" />
+        </Grid>
+
+                <Button x:Name="EngButton" IsEnabled="True" Background="#01d5bc"
                          Foreground="#161376" BorderThickness="0"   Content="ENG" HorizontalAlignment="Center" Visibility="Hidden" Margin="1006,30,0,0" VerticalAlignment="Top" Click="eng_Click"/>
         <Button x:Name="TrButton" IsEnabled="True" Background="#01d5bc"
                          Foreground="#161376" BorderThickness="0"   Content="TR" HorizontalAlignment="Center" Visibility="Hidden" Margin="1006,30,0,0" VerticalAlignment="Top" Click="tr_Click"/>
