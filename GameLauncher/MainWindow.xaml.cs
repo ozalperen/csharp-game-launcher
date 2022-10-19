@@ -1145,7 +1145,7 @@ namespace GameLauncher
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start(new ProcessStartInfo("https://ui.api.ceremeet.com/forgotpassword") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://ui.api.ceremeet.com/register") { UseShellExecute = true });
         }
     }
 
