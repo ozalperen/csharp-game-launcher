@@ -910,8 +910,7 @@ namespace GameLauncher
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            LoginGroup.Visibility = Visibility.Hidden;
-            RegisterGroup.Visibility = Visibility.Visible;
+            Process.Start(new ProcessStartInfo("https://ui.api.ceremeet.com/register") { UseShellExecute = true });
         }
         public class RegisterRoot
         {
