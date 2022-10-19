@@ -935,11 +935,7 @@ namespace GameLauncher
             System.Diagnostics.Process.Start(sInfo);
         }
 
-        private void RegisterButton_Click(object sender, RoutedEventArgs e)
-        {
-            LoginGroup.Visibility = Visibility.Hidden;
-            RegisterGroup.Visibility = Visibility.Visible;
-        }
+
         public class RegisterRoot
         {
             public string status { get; set; }
@@ -1143,6 +1139,11 @@ namespace GameLauncher
         
 
         private void ForgotButton_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo("https://ui.api.ceremeet.com/forgotpassword") { UseShellExecute = true });
+        }
+
+        private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
             Process.Start(new ProcessStartInfo("https://ui.api.ceremeet.com/forgotpassword") { UseShellExecute = true });
         }
